@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -30,9 +30,12 @@ function App() {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter((item) => {
-    return item.title.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  const filteredProducts = useMemo(() => {
+    return products.filter((item) => {
+      console.log("Hey i am triggered");
+      return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+  }, [products, searchTerm]);
 
   return (
     <>
